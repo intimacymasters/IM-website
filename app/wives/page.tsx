@@ -44,7 +44,7 @@ export default function WivesPage() {
             <SectionIntro
               eyebrow="The community"
               title={<>Wifestars. A circle of women who <Accent>talk about it.</Accent></>}
-              text="A private, women only community where wives heal, grow and reclaim their sensuality together. More than 1,000 women have been part of it."
+              text="A private, women only community where wives heal, grow and reclaim their sensuality together. More than 350 women have been part of it."
             />
             <ul className="mt-8 grid gap-3">
               {wifestars.points?.map((point) => (

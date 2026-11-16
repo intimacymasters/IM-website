@@ -55,7 +55,7 @@ export default function Home() {
               <Image src="/images/jessica-portrait.jpg" alt="Jessica Sampson, founder of The Intimacy Masters" fill sizes="(max-width: 1023px) 90vw, 40vw" className="object-cover object-[50%_15%]" />
             </div>
             <div className="absolute -bottom-6 right-0 max-w-[220px] rounded-[1.6rem] border border-white bg-white/92 p-5 shadow-xl backdrop-blur-xl sm:-right-6">
-              <p className="font-display text-4xl font-semibold text-[#8D2F5B]"><CountUp to={25000} suffix="+" /></p>
+              <p className="font-display text-4xl font-semibold text-[#8D2F5B]"><CountUp to={1500} suffix="+" /></p>
               <p className="mt-1 text-sm font-semibold leading-snug text-[#5B4650]">women and men taught healthier intimacy</p>
             </div>
           </Reveal>

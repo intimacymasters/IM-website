@@ -715,7 +715,7 @@ export function SpiceExperience() {
           </Rise>
           <Rise delay={0.1}>
             <p className="eyebrow text-[#FFB6C8]">The woman behind Pepper and Honey</p>
-            <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.03] tracking-[-0.04em] sm:text-5xl">Jessica Sampson has taught more than 25,000 people to have this conversation.</h2>
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.03] tracking-[-0.04em] sm:text-5xl">Jessica Sampson has taught more than 1,500 people to have this conversation.</h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">
               Licensed clinical sexologist. A believer. Very hard to shock. If you would rather talk than read, the first call is free.
             </p>

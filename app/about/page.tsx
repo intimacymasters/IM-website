@@ -11,7 +11,7 @@ import { Testimonials } from "../components/testimonials";
 export const metadata: Metadata = {
   title: "About Jessica Sampson",
   description:
-    "Jessica Sampson is an award-winning licensed clinical sexologist, family life coach, author and founder of The Intimacy Masters. She has taught more than 25,000 women and men.",
+    "Jessica Sampson is an award-winning licensed clinical sexologist, family life coach, author and founder of The Intimacy Masters. She has taught more than 1,000 women and 500 men.",
 };
 
 const credentials = [
@@ -24,10 +24,10 @@ const credentials = [
 ];
 
 const numbers = [
-  { value: 20000, label: "women taught" },
-  { value: 5000, label: "men reached" },
-  { value: 4000, label: "at her sex conference" },
-  { value: 1000, label: "Wifestars members" },
+  { value: 1000, label: "women taught" },
+  { value: 500, label: "men reached" },
+  { value: 30, label: "at her sex conference" },
+  { value: 350, label: "Wifestars members" },
 ];
 
 const books = ["Woman, Sex Was Made for You Too", "Outercourse", "How to Sex Educate Your Child", "The A to Z Smart Up", "100 Checklist for Sexually Aware Children and Teens"];
@@ -66,7 +66,7 @@ export default function AboutPage() {
                 The Intimacy Masters is a family-centred organisation. It serves every stage of family life, from a child learning about their body to a couple finding their way back to each other.
               </p>
               <p>
-                Jessica convened a sex conference that brought together more than 12 sexologists and over 4,000 people, online and on site, to talk openly about a subject most people only whisper about.
+                Jessica convened a sex conference that brought together more than 12 sexologists, online and on site, to talk openly about a subject most people only whisper about.
               </p>
               <p className="font-display text-2xl font-medium italic leading-snug text-[#8D2F5B]">
                 Her goal is bold: to support one million marriages.
