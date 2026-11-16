@@ -45,6 +45,38 @@ const audiences = [
   },
 ];
 
+const trustedLogos = [
+  { name: "Craftsman", src: "/logos/craftsman.jpg" },
+  { name: "DataKirk", src: "/logos/datakirk.png" },
+  { name: "DKT International Nigeria", src: "/logos/dkt-international.jpg" },
+  { name: "The Dr. Rachael Institute", src: "/logos/dr-rachael-institute.jpg" },
+  { name: "Dr. Seyil Absolute Wellness", src: "/logos/dr-seyil.png" },
+  { name: "Eat 2 Live", src: "/logos/eat2live.png" },
+  { name: "Engraced Life", src: "/logos/engraced-life.jpg" },
+  { name: "Exquisite Magazine", src: "/logos/exquisite-magazine.jpg" },
+  { name: "Food World Emporium", src: "/logos/food-world-emporium.png" },
+  { name: "Goz", src: "/logos/goz.png" },
+  { name: "JPosh Services", src: "/logos/jposh-services.png" },
+  { name: "JR Scents", src: "/logos/jr-scents.png" },
+  { name: "Kiss Lube Gel", src: "/logos/kiss-lube-gel.jpg" },
+  { name: "Kudos Healthy Living", src: "/logos/kudos-healthy-living.png" },
+  { name: "LadyCare", src: "/logos/ladycare.jpg" },
+  { name: "Laurels Property", src: "/logos/laurels-property.png" },
+  { name: "Learnify Africa", src: "/logos/learnify-africa.png" },
+  { name: "Mmiri", src: "/logos/mmiri.png" },
+  { name: "NGH", src: "/logos/ngh.png" },
+  { name: "Oasis Global Properties", src: "/logos/oasis-global-properties.jpg" },
+  { name: "Opus Homes", src: "/logos/opus-homes.png" },
+  { name: "Peadville Schools", src: "/logos/peadville-schools.jpg" },
+  { name: "Rotary District 9111", src: "/logos/rotary-district-9111.jpg" },
+  { name: "Segz", src: "/logos/segz.png" },
+  { name: "Senora Secrets", src: "/logos/senora-secrets.png" },
+  { name: "SexTalk with Soulspice", src: "/logos/sextalk.png" },
+  { name: "Triple S Fabrics", src: "/logos/triple-s-fabrics.png" },
+  { name: "True Envy", src: "/logos/true-envy.png" },
+  { name: "Zuife Naturals", src: "/logos/zuife-naturals.png" },
+];
+
 const services = [
   {
     number: "01",
@@ -365,21 +397,51 @@ export default function Home() {
         </div>
       </section>
 
-      <section aria-label="Recognition and community" className="border-y border-[#4B1530]/10 bg-[#3D162A] py-5 text-white">
-        <div className="marquee">
-          <div className="marquee-track">
-            {[...Array(2)].flatMap((_, group) => [
-              "ELOY Awards 2022",
-              "20,000+ women educated",
-              "5,000+ men reached",
-              "Schools & parent communities",
-              "Churches & organisations",
-            ].map((item, index) => (
-              <div key={`${group}-${index}`} className="flex items-center gap-4 px-7 text-sm font-bold uppercase tracking-[0.14em] text-white/85">
-                <Heart size={13} fill="currentColor" className="text-[#F3A6BD]" /> {item}
+      <section aria-labelledby="trusted-title" className="overflow-hidden border-y border-white/10 bg-[#2A111E] py-20 text-white sm:py-24">
+        <motion.div {...reveal} className="mx-auto max-w-4xl px-6 text-center sm:px-8">
+          <p className="eyebrow text-[#F3A6BD]">Trusted by</p>
+          <h2 id="trusted-title" className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl">
+            Organisations and communities that value honest conversations.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/66 sm:text-lg">
+            Jessica&apos;s work has reached businesses, schools, wellness communities, and professional organisations.
+          </p>
+        </motion.div>
+
+        <div className="mt-14 space-y-4 sm:mt-16 sm:space-y-5">
+          {[trustedLogos.slice(0, 15), trustedLogos.slice(15)].map((row, rowIndex) => (
+            <div key={rowIndex} className="logo-marquee">
+              <div className={`logo-marquee-track ${rowIndex === 1 ? "logo-marquee-track-reverse" : ""}`}>
+                {[...row, ...row].map((logo, index) => {
+                  const duplicate = index >= row.length;
+                  return (
+                    <motion.div
+                      key={`${logo.name}-${index}`}
+                      data-duplicate={duplicate}
+                      whileHover={reduceMotion ? undefined : { y: -5, scale: 1.025 }}
+                      transition={{ type: "spring", bounce: 0, duration: 0.35 }}
+                      className="logo-card"
+                      aria-hidden={duplicate || undefined}
+                    >
+                      <Image
+                        src={logo.src}
+                        alt={duplicate ? "" : `${logo.name} logo`}
+                        fill
+                        sizes="(max-width: 640px) 144px, 184px"
+                        className="object-contain p-4"
+                      />
+                    </motion.div>
+                  );
+                })}
               </div>
-            )))}
-          </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mx-auto mt-12 flex max-w-5xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 text-xs font-bold uppercase tracking-[0.14em] text-white/65 sm:text-sm">
+          {["ELOY Awards 2022", "20,000+ women educated", "5,000+ men reached"].map((item) => (
+            <span key={item} className="flex items-center gap-2"><Heart size={12} fill="currentColor" className="text-[#F3A6BD]" /> {item}</span>
+          ))}
         </div>
       </section>
 
