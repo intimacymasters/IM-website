@@ -97,17 +97,20 @@ body {
 }
 
 .testimonial-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: #d49ab1 transparent;
+  cursor: grab;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  user-select: none;
 }
 
 .testimonial-scroll::-webkit-scrollbar {
-  height: 7px;
+  display: none;
 }
 
-.testimonial-scroll::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: #d49ab1;
+.testimonial-scroll.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
 }
 
 a, button {

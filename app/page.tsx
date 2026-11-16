@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import {
+  ArrowLeft,
   ArrowRight,
   Camera,
   Check,
@@ -18,7 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const bookingUrl = "https://selar.co/bookacallwithcoachjess";
 const consultationUrl = "https://selar.co/IntimateConsultation";
@@ -165,7 +166,81 @@ function SectionIntro({ eyebrow, title, text }: { eyebrow: string; title: string
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
+  const [testimonialProgress, setTestimonialProgress] = useState(0);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isDraggingTestimonials, setIsDraggingTestimonials] = useState(false);
+  const testimonialTrackRef = useRef<HTMLDivElement>(null);
+  const testimonialDragRef = useRef({ active: false, startX: 0, startScroll: 0 });
   const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const track = testimonialTrackRef.current;
+    if (!track) return;
+
+    const updateCarousel = () => {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const progress = maxScroll > 0 ? track.scrollLeft / maxScroll : 0;
+      const cards = Array.from(track.children) as HTMLElement[];
+      const firstCard = cards[0];
+      const gap = Number.parseFloat(getComputedStyle(track).columnGap || "20");
+      const step = firstCard ? firstCard.offsetWidth + gap : track.clientWidth;
+      const nearestIndex = Math.min(cards.length - 1, Math.max(0, Math.round(track.scrollLeft / step)));
+
+      setTestimonialProgress(Math.min(1, Math.max(0, progress)));
+      setActiveTestimonial(nearestIndex);
+    };
+
+    updateCarousel();
+    track.addEventListener("scroll", updateCarousel, { passive: true });
+    window.addEventListener("resize", updateCarousel);
+
+    return () => {
+      track.removeEventListener("scroll", updateCarousel);
+      window.removeEventListener("resize", updateCarousel);
+    };
+  }, []);
+
+  const moveTestimonials = (direction: -1 | 1) => {
+    const track = testimonialTrackRef.current;
+    const firstCard = track?.firstElementChild as HTMLElement | null;
+    if (!track || !firstCard) return;
+
+    const gap = Number.parseFloat(getComputedStyle(track).columnGap || "20");
+    track.scrollBy({
+      left: direction * (firstCard.offsetWidth + gap),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  };
+
+  const beginTestimonialDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse") return;
+    const track = testimonialTrackRef.current;
+    if (!track) return;
+
+    testimonialDragRef.current = {
+      active: true,
+      startX: event.clientX,
+      startScroll: track.scrollLeft,
+    };
+    setIsDraggingTestimonials(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const dragTestimonials = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!testimonialDragRef.current.active) return;
+    const track = testimonialTrackRef.current;
+    if (!track) return;
+    track.scrollLeft = testimonialDragRef.current.startScroll - (event.clientX - testimonialDragRef.current.startX);
+  };
+
+  const endTestimonialDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!testimonialDragRef.current.active) return;
+    testimonialDragRef.current.active = false;
+    setIsDraggingTestimonials(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
 
   const reveal = reduceMotion
     ? {}
@@ -431,13 +506,22 @@ export default function Home() {
             <div className="hidden items-center gap-2 text-sm font-bold text-[#6A2044] sm:flex"><MessageCircleHeart size={18} /> In their own words</div>
           </motion.div>
 
-          <div className="testimonial-scroll mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-5">
+          <div
+            ref={testimonialTrackRef}
+            onPointerDown={beginTestimonialDrag}
+            onPointerMove={dragTestimonials}
+            onPointerUp={endTestimonialDrag}
+            onPointerCancel={endTestimonialDrag}
+            className={`testimonial-scroll mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 ${isDraggingTestimonials ? "is-dragging" : ""}`}
+            aria-label="Client testimonials"
+          >
             {testimonials.map((item, index) => (
               <motion.blockquote
                 key={item.quote}
                 {...reveal}
                 transition={{ type: "spring", bounce: 0, duration: 0.55, delay: index * 0.05 }}
-                className={`min-w-[86%] snap-start rounded-[2rem] p-7 sm:min-w-[58%] lg:min-w-[38%] ${index % 2 ? "bg-[#F2E7FF]" : "bg-[#FDE2E8]"}`}
+                whileHover={reduceMotion ? undefined : { y: -7, rotate: index % 2 ? 0.25 : -0.25 }}
+                className={`min-w-[86%] snap-start rounded-[2rem] p-7 transition-shadow duration-300 hover:shadow-[0_22px_55px_rgba(78,28,52,0.11)] sm:min-w-[58%] lg:min-w-[38%] ${index % 2 ? "bg-[#F2E7FF]" : "bg-[#FDE2E8]"}`}
               >
                 <Quote size={30} className="text-[#8D2F5B]" fill="currentColor" />
                 <p className="mt-8 font-display text-2xl font-medium leading-snug tracking-[-0.02em] text-[#381626] sm:text-3xl">“{item.quote}”</p>
@@ -451,7 +535,42 @@ export default function Home() {
               </motion.blockquote>
             ))}
           </div>
-          <p className="mt-3 text-sm font-semibold text-[#7A626D] sm:hidden">Swipe to read more →</p>
+          <div className="mt-7 flex items-center gap-4 sm:gap-6">
+            <div className="min-w-0 flex-1">
+              <div className="h-1.5 overflow-hidden rounded-full bg-[#E9D9E0]" aria-hidden="true">
+                <motion.div
+                  className="h-full origin-left rounded-full bg-[#8D2F5B]"
+                  animate={{ scaleX: (1 + testimonialProgress * (testimonials.length - 1)) / testimonials.length }}
+                  transition={reduceMotion ? { duration: 0 } : { type: "spring", bounce: 0, duration: 0.35 }}
+                />
+              </div>
+              <p className="mt-2 text-xs font-bold uppercase tracking-[0.12em] text-[#806A74]">
+                {String(activeTestimonial + 1).padStart(2, "0")} / {String(testimonials.length).padStart(2, "0")}
+              </p>
+            </div>
+            <div className="flex shrink-0 gap-2">
+              <motion.button
+                type="button"
+                onClick={() => moveTestimonials(-1)}
+                disabled={testimonialProgress <= 0.01}
+                whileTap={{ scale: 0.92 }}
+                className="grid size-12 place-items-center rounded-full border border-[#4B1530]/15 bg-white text-[#4B1530] shadow-[0_8px_28px_rgba(78,28,52,0.08)] transition-colors hover:bg-[#FDE2E8] disabled:cursor-not-allowed disabled:opacity-35"
+                aria-label="Previous testimonial"
+              >
+                <ArrowLeft size={19} />
+              </motion.button>
+              <motion.button
+                type="button"
+                onClick={() => moveTestimonials(1)}
+                disabled={testimonialProgress >= 0.99}
+                whileTap={{ scale: 0.92 }}
+                className="grid size-12 place-items-center rounded-full bg-[#4B1530] text-white shadow-[0_10px_30px_rgba(78,28,52,0.2)] transition-colors hover:bg-[#6A2044] disabled:cursor-not-allowed disabled:opacity-35"
+                aria-label="Next testimonial"
+              >
+                <ArrowRight size={19} />
+              </motion.button>
+            </div>
+          </div>
         </div>
       </section>
 
