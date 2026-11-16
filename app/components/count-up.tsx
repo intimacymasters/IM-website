@@ -3,7 +3,7 @@
 import { animate, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
-/** Counts up to a number the first time it scrolls into view, e.g. 25,000+. */
+/** Counts up to a number the first time it scrolls into view, e.g. 1,000+. */
 export function CountUp({ to, suffix = "", className = "" }: { to: number; suffix?: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });

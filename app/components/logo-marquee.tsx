@@ -5,7 +5,7 @@ import { Reveal } from "./reveal";
 export function TrustedBy({
   title = "Organisations and communities that value honest conversations.",
   text = "The Intimacy Masters has reached businesses, schools, wellness communities, and professional organisations.",
-  stats = ["ELOY Awards 2022", "20,000+ women educated", "5,000+ men reached", "187,000+ on Instagram"],
+  stats = ["ELOY Awards 2022", "1,000+ women educated", "500+ men reached", "187,000+ on Instagram"],
 }: {
   title?: string;
   text?: string;
