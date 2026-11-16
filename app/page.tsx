@@ -55,7 +55,7 @@ const services = [
   {
     number: "02",
     title: "Private consultation",
-    text: "Personal support for intimacy, relationship, and sexuality concerns—individually or as a couple.",
+    text: "Personal support for intimacy, relationship, and sexuality concerns, whether individually or as a couple.",
     href: consultationUrl,
     cta: "Book a consultation",
   },
@@ -266,7 +266,7 @@ export default function Home() {
               <span className="text-[#8D2F5B]">A more fulfilling marriage.</span>
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-[#4F3A44] sm:text-xl">
-              Honest conversations and practical support for Christians who want to reconnect—emotionally, relationally, and physically.
+              Honest conversations and practical support for Christians who want to reconnect emotionally, relationally, and physically.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href={bookingUrl}>Book a discovery call</ButtonLink>
@@ -336,7 +336,7 @@ export default function Home() {
                 Jessica Sampson is an award-winning licensed clinical sexologist, family life practitioner, author, and founder of The Intimacy Masters.
               </p>
               <p>
-                She helps couples and individuals find language for the questions that are often hard to say out loud—about marriage, desire, emotional connection, and sexual wellbeing.
+                She helps couples and individuals find language for questions that are often hard to say out loud, including marriage, desire, emotional connection, and sexual wellbeing.
               </p>
               <p>
                 Her approach brings faith-centered understanding together with practical intimacy education, creating room for your values, your questions, and your desire for something better.
