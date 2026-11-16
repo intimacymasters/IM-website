@@ -453,6 +453,7 @@ export default function Home() {
   const [testimonialProgress, setTestimonialProgress] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [isDraggingTestimonials, setIsDraggingTestimonials] = useState(false);
+  const [showAllResources, setShowAllResources] = useState(false);
   const testimonialTrackRef = useRef<HTMLDivElement>(null);
   const testimonialDragRef = useRef({ active: false, startX: 0, startScroll: 0 });
   const reduceMotion = useReducedMotion();
@@ -873,7 +874,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-4">
             {learningOffers.map((offer, index) => (
               <motion.a
                 key={offer.href}
@@ -896,6 +897,70 @@ export default function Home() {
               </motion.a>
             ))}
           </div>
+
+          <div className="mt-10 grid gap-4 md:hidden">
+            {learningOffers.slice(0, 4).map((offer, index) => (
+              <motion.a
+                key={offer.href}
+                href={offer.href}
+                target="_blank"
+                rel="noreferrer"
+                {...reveal}
+                transition={{ type: "spring", bounce: 0, duration: 0.5, delay: index * 0.05 }}
+                whileTap={{ scale: 0.985 }}
+                className="group flex min-h-[275px] flex-col rounded-[1.8rem] border border-white/12 bg-white/[0.075] p-6 transition-colors hover:bg-white/[0.12]"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="grid size-11 place-items-center rounded-2xl bg-[#F6B7C9] text-[#4B1530]"><offer.icon size={20} /></span>
+                  <ExternalLink size={17} className="text-white/45 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
+                </div>
+                <p className="mt-7 text-xs font-bold uppercase tracking-[0.14em] text-[#F3A6BD]">{offer.label}</p>
+                <h4 className="mt-3 text-xl font-bold tracking-[-0.025em] text-white">{offer.title}</h4>
+                <p className="mt-3 text-sm leading-relaxed text-white/62">{offer.text}</p>
+              </motion.a>
+            ))}
+
+            <AnimatePresence initial={false}>
+              {showAllResources && learningOffers.slice(4).map((offer, index) => (
+                <motion.a
+                  key={offer.href}
+                  id={index === 0 ? "more-learning-resources" : undefined}
+                  href={offer.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                  transition={{ type: "spring", bounce: 0, duration: reduceMotion ? 0.15 : 0.38, delay: reduceMotion ? 0 : index * 0.04 }}
+                  whileTap={{ scale: 0.985 }}
+                  className="group flex min-h-[275px] flex-col rounded-[1.8rem] border border-white/12 bg-white/[0.075] p-6 transition-colors hover:bg-white/[0.12]"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="grid size-11 place-items-center rounded-2xl bg-[#F6B7C9] text-[#4B1530]"><offer.icon size={20} /></span>
+                    <ExternalLink size={17} className="text-white/45 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
+                  </div>
+                  <p className="mt-7 text-xs font-bold uppercase tracking-[0.14em] text-[#F3A6BD]">{offer.label}</p>
+                  <h4 className="mt-3 text-xl font-bold tracking-[-0.025em] text-white">{offer.title}</h4>
+                  <p className="mt-3 text-sm leading-relaxed text-white/62">{offer.text}</p>
+                </motion.a>
+              ))}
+            </AnimatePresence>
+          </div>
+
+          <motion.button
+            type="button"
+            onClick={() => setShowAllResources((current) => !current)}
+            whileTap={{ scale: 0.98 }}
+            aria-expanded={showAllResources}
+            aria-controls="more-learning-resources"
+            className="mt-5 flex min-h-14 w-full items-center justify-center gap-2 rounded-full border border-white/22 bg-white/[0.09] px-6 text-sm font-bold text-white transition-colors hover:bg-white/[0.14] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F6B7C9] md:hidden"
+          >
+            {showAllResources ? "Show fewer resources" : "View all resources"}
+            <ChevronDown
+              size={18}
+              className={`transition-transform duration-300 ${showAllResources ? "rotate-180" : ""}`}
+            />
+          </motion.button>
 
           <div className="mt-16 grid gap-5 rounded-[2.3rem] bg-[#F6B7C9] p-7 text-[#381626] md:grid-cols-[1fr_auto] md:items-center md:p-10">
             <div>
