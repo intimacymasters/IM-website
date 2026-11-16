@@ -4,9 +4,12 @@ import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
+  BookOpen,
   Camera,
   Check,
   ChevronDown,
+  ExternalLink,
+  GraduationCap,
   Heart,
   Mail,
   Menu,
@@ -23,6 +26,7 @@ import { useEffect, useRef, useState } from "react";
 
 const bookingUrl = "https://selar.co/bookacallwithcoachjess";
 const consultationUrl = "https://selar.co/IntimateConsultation";
+const calendlyUrl = "https://calendly.com/theintimacymasters/30min";
 
 const audiences = [
   {
@@ -82,8 +86,9 @@ const services = [
     number: "01",
     title: "Discovery call",
     text: "A gentle first conversation to understand what you need and choose a clear next step.",
-    href: bookingUrl,
+    href: calendlyUrl,
     cta: "Book a discovery call",
+    booking: true,
   },
   {
     number: "02",
@@ -97,7 +102,7 @@ const services = [
     title: "Speaking & workshops",
     text: "Thoughtful sessions for churches, schools, events, and organisations, shaped around your audience.",
     href: "mailto:Intimacymasters@gmail.com?subject=Speaking%20and%20workshop%20enquiry",
-    cta: "Invite Jessica",
+    cta: "Plan a session",
   },
   {
     number: "04",
@@ -105,6 +110,65 @@ const services = [
     text: "Practical tools for marriage, intimacy, parenting conversations, and healthier connection at home.",
     href: "https://selar.co/womansexwasmadeforyoutoo",
     cta: "Explore resources",
+  },
+];
+
+const learningOffers = [
+  {
+    title: "Become a Wife Star",
+    text: "A guided marriage enrichment programme for wives who want to build connection with confidence and intention.",
+    href: "https://selar.co/Becomeawifestar",
+    label: "Programme",
+    icon: GraduationCap,
+  },
+  {
+    title: "100 Bedroom Tips",
+    text: "A practical collection of ideas designed to bring curiosity, warmth, and playfulness into married intimacy.",
+    href: "https://selar.co/100bedroomtips",
+    label: "Digital guide",
+    icon: BookOpen,
+  },
+  {
+    title: "Outercourse",
+    text: "A focused resource for couples exploring affectionate and satisfying connection beyond one familiar pattern.",
+    href: "https://selar.co/OUTERCOURSE",
+    label: "Intimacy resource",
+    icon: Heart,
+  },
+  {
+    title: "Shop the book on Amazon",
+    text: "Find The Intimacy Masters reading collection through its Amazon listing.",
+    href: "https://a.co/d/2TiXvAu",
+    label: "Book",
+    icon: BookOpen,
+  },
+  {
+    title: "Intimacy Card",
+    text: "Conversation prompts that help couples move from assumptions to more open and meaningful dialogue.",
+    href: "https://selar.co/Intimacycard",
+    label: "Conversation tool",
+    icon: MessageCircleHeart,
+  },
+  {
+    title: "Child Education Mini Course",
+    text: "A concise starting point for parents preparing to discuss bodies, boundaries, and safety with children.",
+    href: "https://selar.co/childeducationminicourse",
+    label: "Mini course",
+    icon: School,
+  },
+  {
+    title: "Child Education Programme",
+    text: "A fuller learning experience for age appropriate sexuality education and safer family conversations.",
+    href: "https://selar.co/childeducation",
+    label: "Parent learning",
+    icon: Users,
+  },
+  {
+    title: "Woman, Sex Was Made for You Too",
+    text: "A candid resource for women seeking language, understanding, and confidence around marital intimacy.",
+    href: "https://selar.co/womansexwasmadeforyoutoo",
+    label: "Featured book",
+    icon: Sparkles,
   },
 ];
 
@@ -138,7 +202,7 @@ const testimonials = [
 const faqs = [
   {
     q: "Is The Intimacy Masters for Christians?",
-    a: "Yes. Jessica's work is faith-centered and creates room to explore emotional and sexual connection while respecting Christian values, personal dignity, and the realities of married life.",
+    a: "Yes. Our work is faith-centered and creates room to explore emotional and sexual connection while respecting Christian values, personal dignity, and the realities of married life.",
   },
   {
     q: "Do we need to be experiencing a serious problem?",
@@ -149,14 +213,27 @@ const faqs = [
     a: "You do not need perfect words. Begin with the question or concern that feels most important. The conversation is compassionate, practical, and free of shame.",
   },
   {
-    q: "Can I work with Jessica as an individual?",
-    a: "Yes. Jessica works with individuals and couples, with private support shaped around your questions, needs, and relationship experience.",
+    q: "Can I book individual support?",
+    a: "Yes. The Intimacy Masters supports individuals and couples, with private guidance shaped around your questions, needs, and relationship experience.",
   },
   {
     q: "Do you work with schools, churches, or organisations?",
-    a: "Yes. Jessica offers teaching, workshops, group coaching, parent-child communication sessions, and age-appropriate sexuality education for schools and communities.",
+    a: "Yes. The Intimacy Masters offers teaching, workshops, group coaching, parent and child communication sessions, and age appropriate sexuality education for schools and communities.",
   },
 ];
+
+function BrandLogo({ inverse = false, compact = false }: { inverse?: boolean; compact?: boolean }) {
+  return (
+    <span className="flex items-center gap-2.5">
+      <span className={`grid shrink-0 place-items-center rounded-full ${compact ? "size-9" : "size-11"} ${inverse ? "bg-white/10" : "bg-white"}`}>
+        <Image src="/brand/intimacy-masters-symbol.png" alt="" width={compact ? 31 : 38} height={compact ? 31 : 38} />
+      </span>
+      <span className={`${compact ? "text-[13px] sm:text-sm" : "text-base"} font-black uppercase leading-[1.04] tracking-[0.08em] ${inverse ? "text-white" : "text-[#381626]"}`}>
+        The Intimacy<br />Masters
+      </span>
+    </span>
+  );
+}
 
 function ButtonLink({
   href,
@@ -185,6 +262,127 @@ function ButtonLink({
   );
 }
 
+function BookingButton({ children, light = false, onClick }: { children: React.ReactNode; light?: boolean; onClick: () => void }) {
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      whileTap={{ scale: 0.97 }}
+      aria-haspopup="dialog"
+      className={`group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${
+        light
+          ? "bg-white text-[#381626] hover:bg-[#FFF4F7] focus-visible:outline-white"
+          : "bg-[#4B1530] text-white hover:bg-[#6A2044] focus-visible:outline-[#4B1530]"
+      }`}
+    >
+      {children}
+      <ArrowRight size={17} strokeWidth={2.4} className="transition-transform group-hover:translate-x-1" />
+    </motion.button>
+  );
+}
+
+function CalendlyModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, onClose]);
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-[#1F0A14]/58 p-0 backdrop-blur-sm sm:items-center sm:p-5"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) onClose();
+          }}
+        >
+          <motion.section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="calendly-title"
+            initial={{ opacity: 0, y: 34, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 26, scale: 0.985 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.38 }}
+            className="flex h-[94dvh] w-full max-w-5xl flex-col overflow-hidden rounded-t-[2rem] border border-white/80 bg-[#FFF9F5] shadow-[0_35px_100px_rgba(30,6,18,0.34)] sm:h-[88dvh] sm:rounded-[2.2rem]"
+          >
+            <div className="flex items-center justify-between gap-4 border-b border-[#4B1530]/10 px-5 py-4 sm:px-7">
+              <div>
+                <BrandLogo compact />
+                <p id="calendly-title" className="sr-only">Book a discovery call with The Intimacy Masters</p>
+              </div>
+              <button
+                ref={closeRef}
+                type="button"
+                onClick={onClose}
+                className="grid size-11 place-items-center rounded-full bg-[#F4E4E9] text-[#4B1530] transition-colors hover:bg-[#EFCFD9] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4B1530]"
+                aria-label="Close booking calendar"
+              >
+                <X size={19} />
+              </button>
+            </div>
+            <div className="grid min-h-0 flex-1 lg:grid-cols-[300px_1fr]">
+              <aside className="hidden flex-col justify-between bg-[#3D162A] p-8 text-white lg:flex">
+                <div>
+                  <Image src="/brand/intimacy-masters-symbol.png" alt="" width={82} height={82} className="brightness-0 invert" />
+                  <p className="eyebrow mt-8 text-[#F3A6BD]">Discovery call</p>
+                  <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em]">
+                    A private first conversation.
+                  </h2>
+                  <p className="mt-5 leading-relaxed text-white/68">
+                    Share what is on your mind, ask questions, and choose a clear next step without pressure.
+                  </p>
+                </div>
+                <div className="space-y-3 border-t border-white/14 pt-6 text-sm font-semibold text-white/72">
+                  <p className="flex items-center gap-2"><Check size={16} className="text-[#F3A6BD]" /> 30 minutes</p>
+                  <p className="flex items-center gap-2"><ShieldCheck size={16} className="text-[#F3A6BD]" /> Private and confidential</p>
+                </div>
+              </aside>
+              <div className="relative min-h-0 bg-white">
+                <div className="absolute inset-0 grid place-items-center p-8 text-center text-sm font-semibold text-[#806A74]">
+                  Loading the available times
+                </div>
+                <iframe
+                  title="The Intimacy Masters booking calendar"
+                  src={`${calendlyUrl}?hide_gdpr_banner=1&background_color=fff9f5&text_color=381626&primary_color=c20c78`}
+                  className="relative z-10 h-full min-h-[580px] w-full bg-white sm:min-h-0"
+                />
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-t border-[#4B1530]/10 px-5 py-3 text-center text-xs font-semibold text-[#725B66]">
+              <span>
+                Having trouble with the calendar?{" "}
+                <a href={calendlyUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[#8D2F5B] underline underline-offset-2">
+                  Open Calendly <ExternalLink size={12} />
+                </a>
+              </span>
+              <a href={bookingUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[#8D2F5B] underline underline-offset-2">
+                Alternate booking page <ExternalLink size={12} />
+              </a>
+            </div>
+          </motion.section>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 function SectionIntro({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
   return (
     <div className="max-w-3xl">
@@ -197,6 +395,7 @@ function SectionIntro({ eyebrow, title, text }: { eyebrow: string; title: string
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [calendlyOpen, setCalendlyOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [testimonialProgress, setTestimonialProgress] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -288,24 +487,19 @@ export default function Home() {
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
         <nav className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/70 bg-[#fff8f5]/80 px-5 py-3 shadow-[0_12px_45px_rgba(67,20,42,0.09)] backdrop-blur-xl">
           <a href="#top" className="flex items-center gap-2.5" aria-label="The Intimacy Masters home">
-            <span className="grid size-9 place-items-center rounded-full bg-[#4B1530] text-white">
-              <Heart size={17} fill="currentColor" />
-            </span>
-            <span className="text-[13px] font-black uppercase leading-[1.05] tracking-[0.08em] text-[#381626] sm:text-sm">
-              The Intimacy<br />Masters
-            </span>
+            <BrandLogo compact />
           </a>
 
           <div className="hidden items-center gap-7 text-sm font-semibold text-[#4F3A44] lg:flex">
             <a href="#about" className="nav-link">About Jessica</a>
-            <a href="#support" className="nav-link">Who she serves</a>
+            <a href="#support" className="nav-link">Who we serve</a>
             <a href="#services" className="nav-link">Services</a>
             <a href="#stories" className="nav-link">Stories</a>
             <a href="#faq" className="nav-link">FAQ</a>
           </div>
 
           <div className="hidden lg:block">
-            <ButtonLink href={bookingUrl}>Let&apos;s talk</ButtonLink>
+            <BookingButton onClick={() => setCalendlyOpen(true)}>Let&apos;s talk</BookingButton>
           </div>
           <button
             onClick={() => setMenuOpen((value) => !value)}
@@ -328,7 +522,7 @@ export default function Home() {
             >
               {[
                 ["About Jessica", "#about"],
-                ["Who she serves", "#support"],
+                ["Who we serve", "#support"],
                 ["Services", "#services"],
                 ["Testimonials", "#stories"],
                 ["FAQ", "#faq"],
@@ -342,7 +536,7 @@ export default function Home() {
                   {label}
                 </a>
               ))}
-              <div className="mt-2"><ButtonLink href={bookingUrl}>Book a discovery call</ButtonLink></div>
+              <div className="mt-2"><BookingButton onClick={() => setCalendlyOpen(true)}>Book a discovery call</BookingButton></div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -376,7 +570,7 @@ export default function Home() {
               Honest conversations and practical support for Christians who want to reconnect emotionally, relationally, and physically.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href={bookingUrl}>Book a discovery call</ButtonLink>
+              <BookingButton onClick={() => setCalendlyOpen(true)}>Book a discovery call</BookingButton>
               <motion.a
                 href="#services"
                 whileTap={{ scale: 0.97 }}
@@ -404,7 +598,7 @@ export default function Home() {
             Organisations and communities that value honest conversations.
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/66 sm:text-lg">
-            Jessica&apos;s work has reached businesses, schools, wellness communities, and professional organisations.
+            The Intimacy Masters has reached businesses, schools, wellness communities, and professional organisations.
           </p>
         </motion.div>
 
@@ -450,11 +644,11 @@ export default function Home() {
           <motion.div {...reveal} className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2.4rem] bg-[#F6B7C9] shadow-[0_30px_80px_rgba(75,21,48,0.14)]">
               <Image
-                src="/images/jessica-about.jpg"
+                src="/images/jessica-about-professional.jpg"
                 alt="Jessica Sampson, founder of The Intimacy Masters"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
-                className="object-cover object-[51%_42%]"
+                className="object-cover object-[50%_42%]"
               />
             </div>
             <div className="absolute -bottom-6 -right-2 max-w-[235px] rounded-[1.6rem] border border-white bg-white/88 p-5 shadow-xl backdrop-blur-xl sm:-right-6">
@@ -484,7 +678,7 @@ export default function Home() {
                 <span key={tag} className="rounded-full bg-[#F7E6EB] px-4 py-2 text-sm font-bold text-[#6A2044]">{tag}</span>
               ))}
             </div>
-            <div className="mt-9"><ButtonLink href={bookingUrl}>Find your next step</ButtonLink></div>
+            <div className="mt-9"><BookingButton onClick={() => setCalendlyOpen(true)}>Find your next step</BookingButton></div>
           </motion.div>
         </div>
       </section>
@@ -493,7 +687,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
           <motion.div {...reveal}>
             <SectionIntro
-              eyebrow="Who Jessica serves"
+              eyebrow="Who we serve"
               title="Support for the season you are in."
               text="Whether you are finding your voice, navigating disconnection, or preparing a child for the world, there is a thoughtful place to begin."
             />
@@ -524,24 +718,80 @@ export default function Home() {
             <h2 className="section-title mt-4 max-w-3xl text-white">Choose the support that meets you where you are.</h2>
           </motion.div>
           <div className="mt-14 divide-y divide-white/15 border-y border-white/15">
-            {services.map((service) => (
+            {services.map((service) => {
+              const content = (
+                <>
+                  <span className="font-display text-4xl text-[#F3A6BD]">{service.number}</span>
+                  <div>
+                    <h3 className="text-2xl font-bold tracking-[-0.03em] sm:text-3xl">{service.title}</h3>
+                    <p className="mt-2 max-w-2xl leading-relaxed text-white/66">{service.text}</p>
+                  </div>
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-bold transition-colors group-hover:bg-white group-hover:text-[#3D162A]">
+                    {service.cta}<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </>
+              );
+
+              return service.booking ? (
+                <motion.button
+                  key={service.number}
+                  type="button"
+                  onClick={() => setCalendlyOpen(true)}
+                  {...reveal}
+                  whileTap={{ scale: 0.995 }}
+                  className="group grid w-full gap-5 py-8 text-left sm:grid-cols-[75px_1fr_auto] sm:items-center sm:py-10"
+                  aria-haspopup="dialog"
+                >
+                  {content}
+                </motion.button>
+              ) : (
+                <motion.a
+                  key={service.number}
+                  href={service.href}
+                  target={service.href.startsWith("http") ? "_blank" : undefined}
+                  rel={service.href.startsWith("http") ? "noreferrer" : undefined}
+                  {...reveal}
+                  whileTap={{ scale: 0.995 }}
+                  className="group grid gap-5 py-8 sm:grid-cols-[75px_1fr_auto] sm:items-center sm:py-10"
+                >
+                  {content}
+                </motion.a>
+              );
+            })}
+          </div>
+
+          <motion.div {...reveal} className="mt-20 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="eyebrow text-[#F3A6BD]">Learn at your pace</p>
+              <h3 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-5xl">
+                Every course, book, and practical resource in one place.
+              </h3>
+            </div>
+            <p className="max-w-md text-base leading-relaxed text-white/64">
+              Choose a focused next step for marriage, intimacy, parenting conversations, or personal learning.
+            </p>
+          </motion.div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {learningOffers.map((offer, index) => (
               <motion.a
-                key={service.number}
-                href={service.href}
-                target={service.href.startsWith("http") ? "_blank" : undefined}
-                rel={service.href.startsWith("http") ? "noreferrer" : undefined}
+                key={offer.href}
+                href={offer.href}
+                target="_blank"
+                rel="noreferrer"
                 {...reveal}
-                whileTap={{ scale: 0.995 }}
-                className="group grid gap-5 py-8 sm:grid-cols-[75px_1fr_auto] sm:items-center sm:py-10"
+                transition={{ type: "spring", bounce: 0, duration: 0.5, delay: (index % 4) * 0.05 }}
+                whileHover={reduceMotion ? undefined : { y: -6 }}
+                whileTap={{ scale: 0.985 }}
+                className="group flex min-h-[275px] flex-col rounded-[1.8rem] border border-white/12 bg-white/[0.075] p-6 transition-colors hover:bg-white/[0.12]"
               >
-                <span className="font-display text-4xl text-[#F3A6BD]">{service.number}</span>
-                <div>
-                  <h3 className="text-2xl font-bold tracking-[-0.03em] sm:text-3xl">{service.title}</h3>
-                  <p className="mt-2 max-w-2xl leading-relaxed text-white/66">{service.text}</p>
+                <div className="flex items-center justify-between">
+                  <span className="grid size-11 place-items-center rounded-2xl bg-[#F6B7C9] text-[#4B1530]"><offer.icon size={20} /></span>
+                  <ExternalLink size={17} className="text-white/45 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
                 </div>
-                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-bold transition-colors group-hover:bg-white group-hover:text-[#3D162A]">
-                  {service.cta}<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                </span>
+                <p className="mt-7 text-xs font-bold uppercase tracking-[0.14em] text-[#F3A6BD]">{offer.label}</p>
+                <h4 className="mt-3 text-xl font-bold tracking-[-0.025em] text-white">{offer.title}</h4>
+                <p className="mt-3 text-sm leading-relaxed text-white/62">{offer.text}</p>
               </motion.a>
             ))}
           </div>
@@ -550,7 +800,7 @@ export default function Home() {
             <div>
               <p className="eyebrow text-[#6A2044]">Keep learning</p>
               <h3 className="mt-3 font-display text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">Honest reflections for marriage and family life.</h3>
-              <p className="mt-3 max-w-2xl text-[#644452]">Join Jessica&apos;s newsletter for thoughtful guidance you can return to at your own pace.</p>
+              <p className="mt-3 max-w-2xl text-[#644452]">Join The Intimacy Masters newsletter for thoughtful guidance you can return to at your own pace.</p>
             </div>
             <ButtonLink href="https://theintimacymasters.substack.com/">Read the newsletter</ButtonLink>
           </div>
@@ -640,7 +890,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl gap-14 px-6 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
           <motion.div {...reveal}>
             <SectionIntro eyebrow="Good questions" title="You are allowed to ask." text="No question is too awkward, and you do not need to have everything figured out before you begin." />
-            <div className="mt-8"><ButtonLink href={bookingUrl}>Ask your question</ButtonLink></div>
+            <div className="mt-8"><BookingButton onClick={() => setCalendlyOpen(true)}>Ask your question</BookingButton></div>
           </motion.div>
           <motion.div {...reveal} className="divide-y divide-[#315547]/20 border-y border-[#315547]/20">
             {faqs.map((item, index) => {
@@ -680,11 +930,26 @@ export default function Home() {
       <section className="bg-[#F6B7C9] px-6 py-8 sm:px-8 lg:px-10">
         <motion.div
           {...reveal}
-          className="relative mx-auto min-h-[560px] max-w-7xl overflow-hidden rounded-[2.6rem] bg-[#4B1530] p-8 text-white sm:p-12 lg:p-16"
+          className="relative mx-auto min-h-[620px] max-w-7xl overflow-hidden rounded-[2.6rem] bg-[#4B1530] p-8 text-white sm:p-12 lg:p-16"
         >
-          <div className="absolute -right-24 -top-24 size-96 rounded-full bg-[#E98BB0]/30 blur-3xl" />
-          <div className="absolute -bottom-20 left-1/3 size-80 rounded-full bg-[#B882E8]/20 blur-3xl" />
-          <div className="relative z-10 flex min-h-[430px] max-w-3xl flex-col justify-center">
+          <div className="absolute inset-0 md:left-auto md:w-[62%]">
+            <Image
+              src="/images/jessica-pink-suit.jpg"
+              alt="Jessica Sampson in a pink suit"
+              fill
+              sizes="(max-width: 767px) 100vw, 62vw"
+              className="object-cover object-[50%_28%]"
+            />
+          </div>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(42,17,30,0.99)_0%,rgba(61,22,42,0.94)_46%,rgba(61,22,42,0.38)_72%,rgba(61,22,42,0.08)_100%)] max-md:bg-[linear-gradient(180deg,rgba(42,17,30,0.94)_0%,rgba(61,22,42,0.8)_62%,rgba(61,22,42,0.34)_100%)]" />
+          <Image
+            src="/brand/intimacy-masters-symbol.png"
+            alt=""
+            width={360}
+            height={360}
+            className="absolute -bottom-12 -left-12 opacity-[0.08]"
+          />
+          <div className="relative z-10 flex min-h-[500px] max-w-3xl flex-col justify-center">
             <p className="eyebrow text-[#F6B7C9]">Your next chapter</p>
             <h2 className="mt-5 font-display text-5xl font-semibold leading-[0.98] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
               A closer relationship can begin with one honest conversation.
@@ -693,7 +958,7 @@ export default function Home() {
               You do not have to figure it all out before reaching out. Let&apos;s find the right place for you to begin.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href={bookingUrl} light>Book a discovery call</ButtonLink>
+              <BookingButton onClick={() => setCalendlyOpen(true)} light>Book a discovery call</BookingButton>
               <motion.a
                 href={consultationUrl}
                 target="_blank"
@@ -705,7 +970,6 @@ export default function Home() {
               </motion.a>
             </div>
           </div>
-          <Heart className="absolute -bottom-16 -right-10 size-72 rotate-[-12deg] text-white/[0.06]" fill="currentColor" />
         </motion.div>
       </section>
 
@@ -713,10 +977,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 border-b border-white/12 pb-12 md:grid-cols-[1.4fr_0.8fr_0.8fr]">
             <div>
-              <div className="flex items-center gap-3">
-                <span className="grid size-11 place-items-center rounded-full bg-[#F6B7C9] text-[#4B1530]"><Heart size={20} fill="currentColor" /></span>
-                <span className="font-display text-2xl font-semibold">The Intimacy Masters</span>
-              </div>
+              <BrandLogo inverse />
               <p className="mt-6 max-w-md leading-relaxed text-white/62">Faith-centered guidance. Honest conversations. Practical intimacy education for marriage and family life.</p>
               <div className="mt-7 flex gap-3">
                 <a href="https://www.instagram.com/theintimacymasters/" target="_blank" rel="noreferrer" aria-label="Instagram" className="grid size-11 place-items-center rounded-full border border-white/20 hover:bg-white hover:text-[#2A111E]"><Camera size={18} /></a>
@@ -727,18 +988,18 @@ export default function Home() {
               <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#F6B7C9]">Explore</p>
               <div className="mt-5 grid gap-3 text-sm font-semibold text-white/70">
                 <a href="#about" className="hover:text-white">About Jessica</a>
-                <a href="#support" className="hover:text-white">Who she serves</a>
+                <a href="#support" className="hover:text-white">Who we serve</a>
                 <a href="#services" className="hover:text-white">Services & resources</a>
                 <a href="#stories" className="hover:text-white">Testimonials</a>
                 <a href="#faq" className="hover:text-white">FAQ</a>
               </div>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#F6B7C9]">Work with Jessica</p>
+              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#F6B7C9]">Work with us</p>
               <div className="mt-5 grid gap-3 text-sm font-semibold text-white/70">
-                <a href={bookingUrl} target="_blank" rel="noreferrer" className="hover:text-white">Discovery call</a>
+                <button type="button" onClick={() => setCalendlyOpen(true)} className="w-fit text-left hover:text-white">Discovery call</button>
                 <a href={consultationUrl} target="_blank" rel="noreferrer" className="hover:text-white">Private consultation</a>
-                <a href="mailto:Intimacymasters@gmail.com" className="hover:text-white">Speaking & workshops</a>
+                <a href="mailto:Intimacymasters@gmail.com" className="hover:text-white">Speaking and workshops</a>
                 <a href="tel:+2348034206121" className="hover:text-white">+234 803 420 6121</a>
               </div>
             </div>
@@ -749,6 +1010,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      <CalendlyModal open={calendlyOpen} onClose={() => setCalendlyOpen(false)} />
     </main>
   );
 }
