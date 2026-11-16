@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fff9f5;
+  --foreground: #381626;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 110px;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #8d2f5b;
+  color: #fff;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.hero-title {
+  max-width: 780px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3.4rem, 6.8vw, 7rem);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+}
+
+.section-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.8rem, 5.5vw, 5.3rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.048em;
+  color: #381626;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8d2f5b;
+}
+
+.section-pad {
+  padding-block: clamp(5.5rem, 10vw, 9rem);
+}
+
+.nav-link {
+  position: relative;
+  padding-block: 0.4rem;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  border-radius: 999px;
+  background: #8d2f5b;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 240ms ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+.testimonial-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #d49ab1 transparent;
+}
+
+.testimonial-scroll::-webkit-scrollbar {
+  height: 7px;
+}
+
+.testimonial-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #d49ab1;
+}
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active, a:active {
+  transition-duration: 100ms;
+}
+
+@media (max-width: 767px) {
+  .hero-title {
+    font-size: clamp(3rem, 14vw, 4.9rem);
+    line-height: 0.95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track { animation: none; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  header nav,
+  header > div {
+    background: #fff8f5 !important;
+    backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  header nav {
+    border: 2px solid #381626;
+    background: #fff8f5;
+  }
+}
