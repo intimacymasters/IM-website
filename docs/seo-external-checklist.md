@@ -36,25 +36,9 @@ There is no visitor tracking yet, so nobody can see which pages bring enquiries.
 - [ ] Tell the developer which one. Connecting it is a small code change.
 - [ ] Events worth tracking: discovery call application sent, call booked, free guide unlocked, shop link clicked, WhatsApp opened.
 
-### 1.4 Point the Vercel address at the real domain
-
-`im-website-rose.vercel.app` shows the same site. The code already tells search engines not to list it. A redirect is cleaner.
-
-- [ ] Vercel → Project → Settings → Domains → `im-website-rose.vercel.app` → Edit → Redirect to `www.theintimacymaster.com`.
-
 ---
 
-## 2. Domain name
-
-The brand is "The Intimacy **Masters**" but the domain is `theintimacymaster.com` (no "s"). People who type the brand name land nowhere: `theintimacymasters.com` does not load today.
-
-- [ ] Check whether `theintimacymasters.com` can be bought. If yes, buy it and redirect it to the main address.
-- [ ] Decide which one is the long-term address. If it changes, set `NEXT_PUBLIC_SITE_URL` on Vercel and every SEO address on the site follows.
-- [ ] Until then, always share the full link, never just the name.
-
----
-
-## 3. Links from Jessica's own profiles
+## 2. Links from Jessica's own profiles
 
 Links from trusted profiles are how Google connects the website to the person. Use the same name and the same one-line description everywhere.
 
@@ -71,7 +55,7 @@ Suggested line: *Jessica Sampson, licensed clinical sexologist and founder of Th
 
 ---
 
-## 4. Google Business Profile
+## 3. Google Business Profile
 
 This is what shows the panel on the right of Google with photo, reviews and a call button.
 
@@ -83,7 +67,7 @@ This is what shows the panel on the right of Google with photo, reviews and a ca
 
 ---
 
-## 5. Trust signals
+## 4. Trust signals
 
 Sex and marriage advice is a sensitive topic. Google ranks it by how clearly the expert can be verified. The About page states Jessica's credentials. These details would make them checkable:
 
@@ -97,7 +81,7 @@ Send these to the developer and they go on the About page and into the structure
 
 ---
 
-## 6. Links from other websites
+## 5. Links from other websites
 
 Each link from a respected site is a vote. Jessica has already earned these; they only need asking for.
 
@@ -109,7 +93,7 @@ Each link from a respected site is a vote. Jessica has already earned these; the
 
 ---
 
-## 7. Content (the biggest long-term lever)
+## 6. Content (the biggest long-term lever)
 
 The site has ten pages. To be found for the questions people type, it needs articles that answer them. Jessica already writes this material for Substack and social media.
 
@@ -128,14 +112,14 @@ The site has ten pages. To be found for the questions people type, it needs arti
 
 ---
 
-## 8. Files the developer still needs
+## 7. Files the developer still needs
 
 - [ ] Original logo files for the partner organisations. Some are cropped in the current files.
 - [ ] Any new professional photos, at full size.
 
 ---
 
-## 9. Check after the site is live for a few days
+## 8. Check after the site is live for a few days
 
 - [ ] [Rich Results Test](https://search.google.com/test/rich-results): test the home, Coaching and Shop pages. No errors expected.
 - [ ] [PageSpeed Insights](https://pagespeed.web.dev): test the home page on mobile. Send the developer the result if any score is under 80.
@@ -145,7 +129,7 @@ The site has ten pages. To be found for the questions people type, it needs arti
 
 ---
 
-## 10. Every month
+## 9. Every month
 
 - [ ] Search Console → Performance: note the top ten searches and which page each lands on.
 - [ ] Search Console → Pages: fix anything listed as "Not indexed".
@@ -165,7 +149,6 @@ For reference. Nothing here needs action.
 | Sitemap and robots | `sitemap.xml` and `robots.txt` are generated automatically |
 | Share cards | Branded picture, title and description for WhatsApp, Instagram, X and LinkedIn |
 | Structured data | Organisation, Jessica as a person, website, breadcrumbs, FAQs, services, and products with prices |
-| Duplicate address | The `vercel.app` copy is marked "do not index" |
 | 404 page | Branded, with links back in, and hidden from search |
 | Headings | One main heading per page, in a clean order |
 | Images | Descriptive alt text; the main photo loads first, the rest load as you scroll |
