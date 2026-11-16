@@ -59,6 +59,26 @@ body {
   padding-block: clamp(5.5rem, 10vw, 9rem);
 }
 
+.hero-veil {
+  background: linear-gradient(
+    90deg,
+    rgb(255 243 238 / 0.97) 0%,
+    rgb(255 243 238 / 0.82) 39%,
+    rgb(255 243 238 / 0.12) 68%,
+    rgb(75 21 48 / 0.12) 100%
+  );
+}
+
+.final-cta-veil {
+  background: linear-gradient(
+    90deg,
+    rgb(42 17 30 / 0.99) 0%,
+    rgb(61 22 42 / 0.94) 46%,
+    rgb(61 22 42 / 0.38) 72%,
+    rgb(61 22 42 / 0.08) 100%
+  );
+}
+
 .nav-link {
   position: relative;
   padding-block: 0.4rem;
@@ -148,6 +168,36 @@ button:active, a:active {
   .hero-title {
     font-size: clamp(3rem, 14vw, 4.9rem);
     line-height: 0.95;
+  }
+
+  .hero-veil {
+    background: rgb(255 243 238 / 0.88);
+    backdrop-filter: blur(1px) saturate(90%);
+  }
+
+  .hero-support-button {
+    border-color: rgb(75 21 48 / 0.16);
+    background: #fff9f5;
+    box-shadow: 0 12px 30px rgb(75 21 48 / 0.12);
+    backdrop-filter: none;
+  }
+
+  .hero-proof-row {
+    gap: 0.5rem;
+  }
+
+  .hero-proof-item {
+    border: 1px solid rgb(75 21 48 / 0.1);
+    border-radius: 999px;
+    background: rgb(255 249 245 / 0.94);
+    padding: 0.5rem 0.75rem;
+    color: #4b1530;
+    box-shadow: 0 8px 20px rgb(75 21 48 / 0.08);
+  }
+
+  .final-cta-veil {
+    background: rgb(42 17 30 / 0.88);
+    backdrop-filter: saturate(80%);
   }
 }
 
