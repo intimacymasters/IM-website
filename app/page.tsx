@@ -975,10 +975,10 @@ export default function Home() {
           />
           <div className="relative z-10 flex min-h-[500px] max-w-3xl flex-col justify-center">
             <p className="eyebrow text-[#F6B7C9]">Your next chapter</p>
-            <h2 className="mt-5 font-display text-5xl font-semibold leading-[0.98] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
+            <h2 className="final-cta-title mt-5 font-display text-5xl font-semibold leading-[0.98] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
               A closer relationship can begin with one honest conversation.
             </h2>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/72">
+            <p className="final-cta-description mt-7 max-w-2xl text-lg leading-relaxed text-white/72">
               You do not have to figure it all out before reaching out. Let&apos;s find the right place for you to begin.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
