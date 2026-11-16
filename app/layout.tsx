@@ -17,7 +17,7 @@ const display = Playfair_Display({
 export const metadata: Metadata = {
   title: "The Intimacy Masters | Faith-centered intimacy guidance",
   description:
-    "Compassionate, faith-centered support for deeper connection, healthier conversations, and more fulfilling relationships with Jessica Sampson.",
+    "Compassionate, faith-centered support for deeper connection, healthier conversations, and more fulfilling relationships.",
   openGraph: {
     title: "The Intimacy Masters",
     description: "A deeper connection. A more fulfilling marriage.",
