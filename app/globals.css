@@ -31,13 +31,102 @@ body {
   font-family: var(--font-display), Georgia, serif;
 }
 
+/*
+  Hero layout.
+  Below 1024px the portrait sits at the top and the copy starts under
+  Jessica's chin, so text never covers her face. The photo is 4:5 and her
+  chin sits at about 52% of its height, which is what the padding maths
+  below is based on. From 1024px up the photo fills the section and the
+  copy stays in a column to the left of her face. Landscape screens from
+  640px also use that side-by-side layout (the "hero-wide" variant), because
+  a full-width portrait would push the copy below the fold there.
+*/
+@custom-variant hero-wide {
+  @media (min-width: 1024px), (min-width: 640px) and (orientation: landscape) {
+    @slot;
+  }
+}
+
+.hero-photo {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  aspect-ratio: 16 / 25; /* photo renders 125vw wide, cropped at the sides */
+}
+
+.hero-veil {
+  background: linear-gradient(
+    180deg,
+    rgb(255 243 238 / 0) 0%,
+    rgb(255 243 238 / 0) 45%,
+    rgb(255 243 238 / 0.9) 54%,
+    #fff3ee 61%
+  );
+}
+
+.hero-content {
+  padding-top: calc(81.25vw + 0.75rem);
+  padding-bottom: 3rem;
+}
+
+.hero-copy {
+  max-width: 42rem;
+}
+
 .hero-title {
-  max-width: 780px;
   font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(3.4rem, 6.8vw, 7rem);
+  font-size: clamp(2.2rem, 11.5vw, 4rem);
   font-weight: 600;
-  line-height: 0.92;
+  line-height: 0.96;
   letter-spacing: -0.055em;
+}
+
+@media (min-width: 640px) {
+  .hero-photo {
+    aspect-ratio: 4 / 5; /* whole photo, full width */
+  }
+
+  .hero-content {
+    padding-top: calc(65vw + 1.25rem);
+    padding-bottom: 4rem;
+  }
+
+  .hero-title {
+    font-size: clamp(3.4rem, 6.8vw, 4.4rem);
+    line-height: 0.94;
+  }
+}
+
+@media (min-width: 1024px), (min-width: 640px) and (orientation: landscape) {
+  .hero-photo {
+    inset: 0;
+    aspect-ratio: auto;
+  }
+
+  .hero-veil {
+    background: linear-gradient(
+      90deg,
+      rgb(255 243 238 / 0.97) 0%,
+      rgb(255 243 238 / 0.82) 39%,
+      rgb(255 243 238 / 0.12) 68%,
+      rgb(75 21 48 / 0.12) 100%
+    );
+  }
+
+  .hero-content {
+    padding-top: 1rem;
+    padding-bottom: 0;
+  }
+
+  /* Her face starts at about 46% of the viewport width. */
+  .hero-copy {
+    max-width: min(32.5rem, 41vw);
+  }
+
+  .hero-title {
+    font-size: clamp(2.6rem, 5.5vw, 4.7rem);
+    line-height: 0.92;
+  }
 }
 
 .section-title {
@@ -56,7 +145,30 @@ body {
 }
 
 .section-pad {
-  padding-block: clamp(5.5rem, 10vw, 9rem);
+  padding-block: clamp(4rem, 10vw, 9rem);
+}
+
+/* On phones a row of cards scrolls sideways instead of stacking very tall. */
+@media (max-width: 639px) {
+  .card-rail {
+    display: flex;
+    gap: 1rem;
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
+    padding-bottom: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .card-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-rail > * {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
 }
 
 .final-cta-veil {
@@ -86,7 +198,8 @@ body {
   transition: transform 240ms ease;
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link-active::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -155,15 +268,6 @@ button:active, a:active {
 }
 
 @media (max-width: 767px) {
-  .hero-title {
-    font-size: clamp(3rem, 14vw, 4.9rem);
-    line-height: 0.95;
-  }
-
-  .hero-mobile-veil {
-    background: rgb(255 243 238 / 0.55);
-  }
-
   .hero-mobile-support {
     border-color: rgb(75 21 48 / 0.16);
     background: #fff9f5;
@@ -185,17 +289,416 @@ button:active, a:active {
   }
 
   .final-cta-veil {
-    background: rgb(42 17 30 / 0.35);
+    background: linear-gradient(180deg, rgb(75 21 48 / 0) 0%, rgb(75 21 48 / 0) 22%, rgb(75 21 48 / 0.92) 41%, #4b1530 47%);
+  }
+}
+
+/* ---------- Focused pages ---------- */
+
+.page-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.7rem, 6.4vw, 5.6rem);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+
+/*
+  Accent words (italic, coloured) are reserved for each page's main title.
+  Inside section headings they read as ordinary text.
+*/
+.section-title em,
+.spice-heading em {
+  font-style: normal;
+  color: inherit;
+}
+
+/* Signature shape: a portrait frame with an arched top. */
+.arch {
+  border-radius: 999px 999px 2rem 2rem;
+}
+
+.hero-rise {
+  animation: hero-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-rise-late {
+  animation-delay: 140ms;
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+.heartbeat {
+  animation: heartbeat 2.4s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  12% { transform: scale(1.16); }
+  24% { transform: scale(1); }
+  36% { transform: scale(1.1); }
+  48% { transform: scale(1); }
+}
+
+/* Band of oversized moving type. */
+.phrase-track {
+  display: flex;
+  width: max-content;
+  animation: logo-marquee 38s linear infinite;
+}
+
+/* The free guide cover, shown as a tilted booklet with pages behind it. */
+.guide-booklet {
+  transform: rotate(-3deg);
+}
+
+.guide-booklet::before,
+.guide-booklet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  background: #fff9f5;
+}
+
+.guide-booklet::before {
+  transform: translate(10px, 10px) rotate(2deg);
+  opacity: 0.55;
+}
+
+.guide-booklet::after {
+  transform: translate(5px, 5px) rotate(1deg);
+  opacity: 0.8;
+}
+
+.guide-booklet > * {
+  z-index: 1;
+}
+
+/* Step numbers and other large numerals. */
+.numeral {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+/* ---------- Spice check page ---------- */
+
+.spice-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3.4rem, 13vw, 10.5rem);
+  font-weight: 600;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+}
+
+.spice-heading {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.spice-quote {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.2rem, 5.6vw, 4.8rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+
+/* The word "spicy" in one hot, solid colour. */
+.spice-shimmer {
+  color: #ff6b4a;
+  animation: hero-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+}
+
+.spice-rise-3 { animation-delay: 280ms; }
+.spice-rise-4 { animation-delay: 420ms; }
+
+/* Outlined words in the moving band. */
+.spice-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(246 183 201 / 0.85);
+}
+
+.spice-tease .phrase-track {
+  animation-duration: 26s;
+}
+
+/* Embers drifting up the page. */
+.spice-embers {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.spice-embers span {
+  position: absolute;
+  bottom: -3vh;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff8a3d;
+  box-shadow: 0 0 14px 4px rgb(255 138 61 / 0.55);
+  opacity: 0;
+  animation: spice-ember linear infinite;
+}
+
+@keyframes spice-ember {
+  0% { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
+  12% { opacity: 0.9; }
+  100% { transform: translate3d(6vw, -110vh, 0) scale(1.2); opacity: 0; }
+}
+
+.spice-page > section,
+.spice-page > div:not(.spice-embers):not(.spice-gate) {
+  z-index: 1;
+}
+
+/* The door sits above the page but under the site header. */
+.spice-page > .spice-gate {
+  z-index: 40;
+}
+
+/* Pepper and Honey. */
+.spice-bob {
+  transition: rotate 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: spice-bob 3.6s ease-in-out infinite;
+}
+
+.spice-bob-late {
+  animation-delay: -1.4s;
+}
+
+@keyframes spice-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+
+.spice-flame {
+  transform-origin: 50% 100%;
+  animation: spice-flicker 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes spice-flicker {
+  from { transform: scale(1, 0.92); opacity: 0.75; }
+  to { transform: scale(1.04, 1.08); opacity: 1; }
+}
+
+.spice-hearts {
+  animation: spice-float 2.6s ease-in-out infinite;
+}
+
+@keyframes spice-float {
+  0%, 100% { transform: translateY(0); opacity: 0.9; }
+  50% { transform: translateY(-9px); opacity: 1; }
+}
+
+.spice-zzz {
+  animation: spice-float 3s ease-in-out infinite;
+}
+
+.spice-scroll-cue {
+  animation: spice-cue 2s ease-in-out infinite;
+}
+
+@keyframes spice-cue {
+  0%, 100% { translate: -50% 0; }
+  50% { translate: -50% 8px; }
+}
+
+/* Myth cards turn over. */
+.spice-flip {
+  perspective: 1200px;
+}
+
+.spice-flip-inner {
+  position: relative;
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spice-flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.spice-flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1.8rem;
+  padding: 1.6rem;
+  backface-visibility: hidden;
+}
+
+.spice-flip-back {
+  transform: rotateY(180deg);
+}
+
+.spice-way {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 500ms ease, border-color 500ms ease;
+}
+
+.spice-way:hover {
+  transform: translateY(-8px) rotate(-0.6deg);
+  border-color: rgb(246 183 201 / 0.55);
+  box-shadow: 0 30px 70px rgb(224 38 60 / 0.28);
+}
+
+/* Way cards keep their secret until you hover or tap. */
+.spice-way {
+  cursor: pointer;
+}
+
+.spice-peek {
+  filter: blur(7px);
+  opacity: 0.55;
+  user-select: none;
+  transition: filter 600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 600ms ease;
+}
+
+.spice-peek-hint {
+  transition: opacity 400ms ease;
+}
+
+.spice-way.is-open .spice-peek,
+.spice-way:focus-visible .spice-peek {
+  filter: none;
+  opacity: 1;
+  user-select: auto;
+}
+
+.spice-way.is-open .spice-peek-hint {
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  .spice-way:hover .spice-peek {
+    filter: none;
+    opacity: 1;
   }
 
-  .final-cta-title {
-    text-shadow: 0 2px 18px rgb(27 8 18 / 0.28);
+  .spice-way:hover .spice-peek-hint {
+    opacity: 0;
   }
+}
 
-  .final-cta-description {
-    color: rgb(255 255 255 / 0.88);
-    text-shadow: 0 1px 12px rgb(27 8 18 / 0.34);
+/* The typing cursor after a whisper. */
+.spice-caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.9em;
+  margin-left: 0.06em;
+  background: #ffd9a8;
+  vertical-align: -0.08em;
+  animation: spice-blink 0.9s steps(1) infinite;
+}
+
+@keyframes spice-blink {
+  50% { opacity: 0; }
+}
+
+/* The entry strip on the home page: one flat colour. */
+.spice-strip {
+  background: #c20c78;
+}
+
+/* ---------- Sitewide motion ---------- */
+
+/*
+  Scroll linked motion, in browsers that support it: portraits and covers
+  settle from a slight zoom as they come into view, and the home hero photo
+  drifts as you scroll away. Everything stays still where it is unsupported.
+*/
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .arch img {
+      animation: settle-zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+
+    @media (min-width: 1024px), (min-width: 640px) and (orientation: landscape) {
+      .hero-photo img {
+        animation: drift-down linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 900px;
+      }
+    }
+
   }
+}
+
+@keyframes settle-zoom {
+  from { scale: 1.18; }
+  to { scale: 1; }
+}
+
+@keyframes drift-down {
+  to { translate: 0 70px; scale: 1.06; }
+}
+
+/* ---------- Page to page transitions ---------- */
+
+/* Between pages the screen dips to brand plum with the symbol, like a curtain. */
+::view-transition {
+  pointer-events: none;
+  background: #3d162a url("/brand/intimacy-masters-symbol.png") center / 5.5rem no-repeat;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  display: none;
+}
+
+::view-transition-old(.page-out) {
+  animation: 300ms cubic-bezier(0.4, 0, 1, 1) both page-out;
+}
+
+::view-transition-new(.page-in) {
+  animation: 620ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both page-in;
+}
+
+@keyframes page-out {
+  to { opacity: 0; transform: translateY(-28px) scale(0.985); filter: blur(8px); }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(64px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* The header and floating actions stay put while the page changes under them. */
+::view-transition-group(site-header),
+::view-transition-group(mobile-bar),
+::view-transition-group(whatsapp-fab) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(site-header),
+::view-transition-old(mobile-bar),
+::view-transition-old(whatsapp-fab) {
+  display: none;
+}
+
+::view-transition-new(site-header),
+::view-transition-new(mobile-bar),
+::view-transition-new(whatsapp-fab) {
+  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -217,6 +720,45 @@ button:active, a:active {
     animation: none;
   }
   .logo-card[data-duplicate="true"] { display: none; }
+  .phrase-track {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.5rem;
+    animation: none;
+  }
+  .aura::before,
+  .aura::after,
+  .heartbeat,
+  .hero-rise,
+  .spice-shimmer,
+  .spice-embers span,
+  .spice-bob,
+  .spice-flame,
+  .spice-hearts,
+  .spice-zzz,
+  .spice-scroll-cue,
+  .spice-strip,
+  .spice-glow,
+  .spice-caret {
+    animation: none;
+  }
+  .spice-peek {
+    filter: none;
+    opacity: 1;
+  }
+  .spice-peek-hint {
+    display: none;
+  }
+  .spice-embers {
+    display: none;
+  }
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }
 
 @media (prefers-reduced-transparency: reduce) {
