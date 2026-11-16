@@ -155,8 +155,8 @@ function ButtonLink({
 function SectionIntro({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
   return (
     <div className="max-w-3xl">
-      <p className="eyebrow">{eyebrow}</p>
-      <h2 className="section-title mt-4">{title}</h2>
+      <p className="eyebrow text-[#8D2F5B]">{eyebrow}</p>
+      <h2 className="section-title mt-4 text-[#381626]">{title}</h2>
       {text && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#67545D]">{text}</p>}
     </div>
   );
