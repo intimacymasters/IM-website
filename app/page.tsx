@@ -575,7 +575,7 @@ export default function Home() {
           sizes="100vw"
           className="object-cover object-[57%_56%] sm:object-[58%_52%]"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,243,238,0.97)_0%,rgba(255,243,238,0.82)_39%,rgba(255,243,238,0.12)_68%,rgba(75,21,48,0.12)_100%)] max-md:bg-[linear-gradient(180deg,rgba(255,243,238,0.96)_0%,rgba(255,243,238,0.72)_49%,rgba(75,21,48,0.08)_100%)]" />
+        <div className="hero-veil absolute inset-0" />
         <div className="relative mx-auto flex min-h-[690px] max-w-7xl items-start px-6 pt-20 sm:px-8 md:items-center md:pt-4 lg:px-10">
           <motion.div
             initial={reduceMotion ? undefined : { opacity: 0, y: 26 }}
@@ -598,14 +598,14 @@ export default function Home() {
               <motion.a
                 href="#services"
                 whileTap={{ scale: 0.97 }}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#4B1530]/20 bg-white/65 px-6 py-3 text-sm font-bold text-[#4B1530] backdrop-blur-md hover:bg-white"
+                className="hero-support-button inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#4B1530]/20 bg-white/65 px-6 py-3 text-sm font-bold text-[#4B1530] backdrop-blur-md hover:bg-white"
               >
                 Explore support <ChevronDown size={17} />
               </motion.a>
             </div>
-            <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#5B4650]">
+            <div className="hero-proof-row mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#5B4650]">
               {["Compassionate", "Confidential", "Practical"].map((item) => (
-                <span key={item} className="flex items-center gap-2"><Check size={15} /> {item}</span>
+                <span key={item} className="hero-proof-item flex items-center gap-2"><Check size={15} /> {item}</span>
               ))}
             </div>
           </motion.div>
@@ -965,7 +965,7 @@ export default function Home() {
               className="object-cover object-[50%_28%]"
             />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(42,17,30,0.99)_0%,rgba(61,22,42,0.94)_46%,rgba(61,22,42,0.38)_72%,rgba(61,22,42,0.08)_100%)] max-md:bg-[linear-gradient(180deg,rgba(42,17,30,0.94)_0%,rgba(61,22,42,0.8)_62%,rgba(61,22,42,0.34)_100%)]" />
+          <div className="final-cta-veil absolute inset-0" />
           <Image
             src="/brand/intimacy-masters-symbol.png"
             alt=""
