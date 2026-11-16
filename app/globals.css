@@ -22,6 +22,25 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Keyboard users can jump past the navigation. Hidden until focused. */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 200;
+  transform: translateY(-200%);
+  border-radius: 999px;
+  background: #4b1530;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
 ::selection {
   background: #8d2f5b;
   color: #fff;

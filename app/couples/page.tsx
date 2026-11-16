@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { ArrowUpRight, Check } from "lucide-react";
 import { BookingButton } from "../components/booking";
@@ -9,12 +8,18 @@ import { Reveal } from "../components/reveal";
 import { Accent, FinalCta, HeroNote, PageHero, Price, SectionIntro, TextLink } from "../components/sections";
 import { Testimonials } from "../components/testimonials";
 import { amazonLinks, productBySlug } from "../lib/site";
+import { JsonLd } from "../components/json-ld";
+import { pageMetadata } from "../lib/seo";
+import { pageGraph, productListGraph } from "../lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "For couples",
+const seo = {
+  title: "Sexless Marriage Help for Couples",
   description:
-    "For married couples who feel more like roommates than lovers. The 100 day Marriage Maintenance programme, couples tools, and private coaching with Jessica Sampson.",
+    "Feel more like roommates than lovers? The 100 day Marriage Maintenance programme, couples tools and private coaching to rebuild intimacy in your marriage.",
+  path: "/couples",
 };
+
+export const metadata = pageMetadata(seo);
 
 const signs = [
   "Your chats are all school runs, bills and groceries.",
@@ -29,6 +34,7 @@ export default function CouplesPage() {
   const programme = productBySlug("marriage-maintenance");
   return (
     <PageShell>
+      <JsonLd data={[...pageGraph({ path: seo.path, name: seo.title, description: seo.description }), productListGraph(seo.path, "Programmes and tools for couples", [programme, ...tools])]} />
       <PageHero
         theme="wine"
         eyebrow="For married couples"

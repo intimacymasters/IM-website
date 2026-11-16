@@ -11,7 +11,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
   return (
     <ViewTransition enter="page-in" exit="page-out" default="none">
       <div>
-        <main className="overflow-hidden">{children}</main>
+        <main id="content" className="overflow-hidden">{children}</main>
         <Footer />
       </div>
     </ViewTransition>

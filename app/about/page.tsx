@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { BookingButton } from "../components/booking";
 import { CountUp } from "../components/count-up";
@@ -7,12 +6,18 @@ import { PageShell } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
 import { Accent, FinalCta, HeroNote, PageHero, SectionIntro, TextLink } from "../components/sections";
 import { Testimonials } from "../components/testimonials";
+import { JsonLd } from "../components/json-ld";
+import { pageMetadata } from "../lib/seo";
+import { pageGraph } from "../lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "About Jessica Sampson",
+const seo = {
+  title: "Jessica Sampson, Clinical Sexologist",
   description:
-    "Jessica Sampson is an award-winning licensed clinical sexologist, family life coach, author and founder of The Intimacy Masters. She has taught more than 1,000 women and 500 men.",
+    "Jessica Sampson is an award-winning licensed clinical sexologist, family life coach, author and founder of The Intimacy Masters in Nigeria.",
+  path: "/about",
 };
+
+export const metadata = pageMetadata(seo);
 
 const credentials = [
   { title: "Licensed clinical sexologist", text: "Clinical training for intimate concerns that need more than advice." },
@@ -35,6 +40,7 @@ const books = ["Woman, Sex Was Made for You Too", "Outercourse", "How to Sex Edu
 export default function AboutPage() {
   return (
     <PageShell>
+      <JsonLd data={pageGraph({ path: seo.path, name: seo.title, description: seo.description, type: "ProfilePage" })} />
       <PageHero
         theme="cream"
         eyebrow="About Jessica Sampson"

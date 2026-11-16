@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { BookingButton } from "../components/booking";
 import { PageShell } from "../components/page-shell";
@@ -6,12 +5,18 @@ import { ProductCard } from "../components/product-card";
 import { Reveal } from "../components/reveal";
 import { Accent, FinalCta, HeroNote, PageHero, Price, SectionIntro, TextLink } from "../components/sections";
 import { productBySlug } from "../lib/site";
+import { JsonLd } from "../components/json-ld";
+import { pageMetadata } from "../lib/seo";
+import { pageGraph, productListGraph } from "../lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "For parents",
+const seo = {
+  title: "Child Sex Education for Parents",
   description:
-    "Age appropriate, values based sexuality education for parents and schools. Books, a mini course and a checklist that give you the words for every stage, from toddler to adult.",
+    "Age appropriate, values based sex education for children and teenagers. Books, a mini course and a checklist that give parents the words for every stage.",
+  path: "/parents",
 };
+
+export const metadata = pageMetadata(seo);
 
 const stages = [
   { age: "0 to 3", name: "Identification" },
@@ -29,6 +34,7 @@ export default function ParentsPage() {
   const book = productBySlug("sex-educate-your-child");
   return (
     <PageShell>
+      <JsonLd data={[...pageGraph({ path: seo.path, name: seo.title, description: seo.description }), productListGraph(seo.path, "Sex education resources for parents", resources)]} />
       <PageHero
         theme="mint"
         eyebrow="For parents and guardians"

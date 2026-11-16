@@ -379,7 +379,7 @@ function SpiceGate({ onEnter }: { onEnter: () => void }) {
       <div className="relative max-w-xl">
         <div className="mx-auto w-44"><SpiceCouple mood={2} /></div>
         <p className="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-[#FFB6C8]">18+ · Married couples</p>
-        <h2 id="spice-gate-title" className="mt-3 font-display text-5xl font-semibold italic leading-[0.98] tracking-[-0.04em] sm:text-6xl">Grown ups only.</h2>
+        <p id="spice-gate-title" className="mt-3 font-display text-5xl font-semibold italic leading-[0.98] tracking-[-0.04em] sm:text-6xl">Grown ups only.</p>
         <p className="mx-auto mt-5 max-w-md text-lg leading-relaxed text-white/75">
           What is behind this door talks plainly, and playfully, about sex in marriage.
         </p>
@@ -545,8 +545,8 @@ export function SpiceExperience() {
             <Flame size={14} /> 18+ · For married couples only
           </p>
           <h1 className="spice-title mt-7">
-            <span className="hero-rise block">What is a</span>
-            <span className="hero-rise hero-rise-late spice-shimmer block italic">spicy</span>
+            <span className="hero-rise block">What is a</span>{" "}
+            <span className="hero-rise hero-rise-late spice-shimmer block italic">spicy</span>{" "}
             <span className="hero-rise spice-rise-3 block">sex life?</span>
           </h1>
           <p className="hero-rise spice-rise-4 mx-auto mt-7 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl">

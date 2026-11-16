@@ -1,11 +1,17 @@
-import type { Metadata } from "next";
 import { PageShell } from "../components/page-shell";
 import { contact, mailtoLink } from "../lib/site";
+import { JsonLd } from "../components/json-ld";
+import { pageMetadata } from "../lib/seo";
+import { pageGraph } from "../lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Privacy policy",
-  description: "How The Intimacy Masters handles your information, in plain language.",
+const seo = {
+  title: "Privacy Policy",
+  description:
+    "How The Intimacy Masters handles your information: what the website collects, the services it relies on, and how coaching stays confidential.",
+  path: "/privacy",
 };
+
+export const metadata = pageMetadata(seo);
 
 const sections = [
   {
@@ -54,6 +60,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <PageShell>
+      <JsonLd data={pageGraph({ path: seo.path, name: seo.title, description: seo.description })} />
       <section className="bg-[#FFF9F5] pb-20 pt-36 sm:pt-44 lg:pb-28">
         <div className="hero-rise mx-auto max-w-3xl px-6 sm:px-8">
           <p className="eyebrow text-[#8D2F5B]">Privacy policy</p>

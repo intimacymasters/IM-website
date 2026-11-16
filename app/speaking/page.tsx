@@ -1,16 +1,21 @@
-import type { Metadata } from "next";
 import { WhatsAppButton } from "../components/booking";
 import { EnquiryForm } from "../components/enquiry-form";
 import { TrustedBy } from "../components/logo-marquee";
 import { PageShell } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
 import { Accent, FinalCta, HeroNote, PageHero, SectionIntro } from "../components/sections";
+import { JsonLd } from "../components/json-ld";
+import { pageMetadata } from "../lib/seo";
+import { pageGraph, serviceGraph } from "../lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Speaking and workshops",
+const seo = {
+  title: "Book a Marriage and Intimacy Speaker",
   description:
-    "Invite Jessica Sampson to speak at your church, school, conference or bridal shower. Thoughtful, values based sessions on marriage, intimacy and sexuality education.",
+    "Invite Jessica Sampson to speak at your church, school, conference or bridal shower. Values based sessions on marriage, intimacy and sexuality education.",
+  path: "/speaking",
 };
+
+export const metadata = pageMetadata(seo);
 
 const formats = [
   {
@@ -34,6 +39,7 @@ const formats = [
 export default function SpeakingPage() {
   return (
     <PageShell>
+      <JsonLd data={[...pageGraph({ path: seo.path, name: seo.title, description: seo.description }), serviceGraph({ path: seo.path, name: "Speaking and workshops", description: seo.description, serviceType: "Public speaking, workshops and sexuality education for schools" })]} />
       <PageHero
         theme="plum"
         eyebrow="Speaking, schools and workshops"

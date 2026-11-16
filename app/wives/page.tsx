@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { ArrowUpRight, Check } from "lucide-react";
 import { BookingButton, WhatsAppButton } from "../components/booking";
@@ -8,12 +7,18 @@ import { ProductCard } from "../components/product-card";
 import { Reveal } from "../components/reveal";
 import { Accent, FinalCta, HeroNote, PageHero, Price, SectionIntro } from "../components/sections";
 import { productBySlug } from "../lib/site";
+import { JsonLd } from "../components/json-ld";
+import { pageMetadata } from "../lib/seo";
+import { pageGraph, productListGraph } from "../lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "For wives",
+const seo = {
+  title: "Wifestars Community for Wives",
   description:
-    "Wifestars is a private community for wives who want to enjoy intimacy with confidence and without shame. Courses, challenges and personal coaching from Jessica Sampson.",
+    "Wifestars is a private community for Christian wives who want to enjoy intimacy with confidence and without shame. Courses, challenges and coaching.",
+  path: "/wives",
 };
+
+export const metadata = pageMetadata(seo);
 
 const weeks = ["Pain", "Patience", "Progress", "Purpose"];
 
@@ -24,6 +29,7 @@ export default function WivesPage() {
   const sensual = productBySlug("sensual-you");
   return (
     <PageShell>
+      <JsonLd data={[...pageGraph({ path: seo.path, name: seo.title, description: seo.description }), productListGraph(seo.path, "Community, courses and resources for wives", [wifestars, sensual, ...more])]} />
       <PageHero
         theme="pink"
         eyebrow="For wives and wives to be"
