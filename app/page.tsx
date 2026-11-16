@@ -647,7 +647,7 @@ export default function Home() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[57%_56%] sm:object-[58%_20%]"
+          className="object-cover object-[57%_56%] sm:object-[58%_18%]"
         />
         <div className="hero-mobile-veil absolute inset-0 bg-[linear-gradient(90deg,rgba(255,243,238,0.97)_0%,rgba(255,243,238,0.82)_39%,rgba(255,243,238,0.12)_68%,rgba(75,21,48,0.12)_100%)] max-md:bg-[linear-gradient(180deg,rgba(255,243,238,0.96)_0%,rgba(255,243,238,0.72)_49%,rgba(75,21,48,0.08)_100%)]" />
         <div className="relative mx-auto flex min-h-[690px] max-w-7xl items-start px-6 pt-20 sm:px-8 md:items-center md:pt-4 lg:px-10">
