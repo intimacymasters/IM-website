@@ -171,8 +171,7 @@ button:active, a:active {
   }
 
   .hero-veil {
-    background: rgb(255 243 238 / 0.88);
-    backdrop-filter: blur(1px) saturate(90%);
+    background: rgb(255 243 238 / 0.68);
   }
 
   .hero-support-button {
@@ -196,8 +195,16 @@ button:active, a:active {
   }
 
   .final-cta-veil {
-    background: rgb(42 17 30 / 0.88);
-    backdrop-filter: saturate(80%);
+    background: rgb(42 17 30 / 0.35);
+  }
+
+  .final-cta-title {
+    text-shadow: 0 2px 18px rgb(27 8 18 / 0.28);
+  }
+
+  .final-cta-description {
+    color: rgb(255 255 255 / 0.88);
+    text-shadow: 0 1px 12px rgb(27 8 18 / 0.34);
   }
 }
 
