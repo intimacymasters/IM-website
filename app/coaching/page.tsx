@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { BookingButton, WhatsAppButton } from "../components/booking";
 import { Faq } from "../components/faq";
@@ -7,12 +6,18 @@ import { Reveal } from "../components/reveal";
 import { Accent, FinalCta, HeroNote, PageHero, Price, SectionIntro } from "../components/sections";
 import { Testimonials } from "../components/testimonials";
 import { productBySlug } from "../lib/site";
+import { JsonLd } from "../components/json-ld";
+import { pageMetadata } from "../lib/seo";
+import { pageGraph, serviceGraph } from "../lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Private coaching",
+const seo = {
+  title: "Private Intimacy Coaching for Couples",
   description:
-    "Private, confidential intimacy coaching with clinical sexologist Jessica Sampson for men, women and couples. Start with a free one hour discovery call.",
+    "Private, confidential intimacy coaching with licensed clinical sexologist Jessica Sampson, for men, women and couples. Start with a free discovery call.",
+  path: "/coaching",
 };
+
+export const metadata = pageMetadata(seo);
 
 const tracks = [
   {
@@ -40,6 +45,7 @@ export default function CoachingPage() {
 
   return (
     <PageShell>
+      <JsonLd data={[...pageGraph({ path: seo.path, name: seo.title, description: seo.description }), serviceGraph({ path: seo.path, name: "Private intimacy coaching", description: seo.description, serviceType: "Intimacy and relationship coaching", products: [call, consultation, riders], freeCall: true })]} />
       <PageHero
         theme="cream"
         eyebrow="Private coaching for men, women and couples"

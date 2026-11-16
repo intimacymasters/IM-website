@@ -1,19 +1,25 @@
-import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { PageShell } from "../components/page-shell";
 import { ShopGrid } from "../components/shop-grid";
 import { Accent, FinalCta } from "../components/sections";
-import { amazonLinks, contact } from "../lib/site";
+import { amazonLinks, contact, products } from "../lib/site";
+import { JsonLd } from "../components/json-ld";
+import { pageMetadata } from "../lib/seo";
+import { pageGraph, productListGraph } from "../lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "Shop",
+const seo = {
+  title: "Marriage Books, Courses and Tools",
   description:
-    "Books, courses, tools and private sessions from Jessica Sampson and The Intimacy Masters, for couples, wives and parents. Prices from ₦1,000.",
+    "Books, courses, tools and private sessions from Jessica Sampson for couples, wives and parents. Prices from ₦1,000, with instant access on Selar.",
+  path: "/shop",
 };
+
+export const metadata = pageMetadata(seo);
 
 export default function ShopPage() {
   return (
     <PageShell>
+      <JsonLd data={[...pageGraph({ path: seo.path, name: seo.title, description: seo.description }), productListGraph(seo.path, "Books, courses, tools and sessions", products)]} />
       <section className="bg-[#FFF3EE] pb-16 pt-36 sm:pt-40 lg:pb-24">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
           <div className="hero-rise max-w-3xl">
@@ -24,6 +30,7 @@ export default function ShopPage() {
             </p>
           </div>
           <div className="hero-rise hero-rise-late mt-12">
+            <h2 className="sr-only">All books, courses, tools and sessions</h2>
             <ShopGrid />
           </div>
           <div className="mt-10 flex flex-col gap-3 rounded-[1.6rem] bg-[#F7E6EB] p-6 text-[#4B1530] sm:flex-row sm:items-center sm:justify-between">

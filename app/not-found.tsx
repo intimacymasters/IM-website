@@ -7,6 +7,7 @@ import { SpiceCouple } from "./components/spice-characters";
 export const metadata: Metadata = {
   title: "Page not found",
   description: "This page does not exist. Find your way back to The Intimacy Masters.",
+  robots: { index: false, follow: true },
 };
 
 const places = [

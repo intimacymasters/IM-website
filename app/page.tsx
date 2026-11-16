@@ -14,7 +14,20 @@ import { Reveal } from "./components/reveal";
 import { SpiceCouple } from "./components/spice-characters";
 import { Accent, FinalCta, Price, SectionIntro, TextLink } from "./components/sections";
 import { Testimonials } from "./components/testimonials";
-import { productBySlug } from "./lib/site";
+import { JsonLd } from "./components/json-ld";
+import { pageMetadata } from "./lib/seo";
+import { faqs, productBySlug } from "./lib/site";
+import { faqGraph, pageGraph } from "./lib/structured-data";
+
+const seo = {
+  title: "The Intimacy Masters | Christian Marriage & Intimacy Coach",
+  description:
+    "Faith-centered marriage and intimacy coaching with clinical sexologist Jessica Sampson. Private sessions, courses and books for couples, wives and parents.",
+  path: "/",
+  absoluteTitle: true,
+};
+
+export const metadata = pageMetadata(seo);
 
 const credentials = ["Licensed clinical sexologist", "Family life coach", "Sexual assault referral practitioner", "Author of five books"];
 
@@ -28,6 +41,7 @@ export default function Home() {
 
   return (
     <PageShell>
+      <JsonLd data={[...pageGraph({ path: seo.path, name: "The Intimacy Masters", description: seo.description }), faqGraph(seo.path, faqs)]} />
       <HomeHero />
 
       <Link href="/spice" className="spice-strip group relative block overflow-hidden text-white">
