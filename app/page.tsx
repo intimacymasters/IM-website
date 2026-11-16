@@ -22,7 +22,7 @@ import {
   X,
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const bookingUrl = "https://selar.co/bookacallwithcoachjess";
 const consultationUrl = "https://selar.co/IntimateConsultation";
@@ -404,6 +404,30 @@ export default function Home() {
   const testimonialDragRef = useRef({ active: false, startX: 0, startScroll: 0 });
   const reduceMotion = useReducedMotion();
 
+  useLayoutEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    const resetToTop = () => {
+      if (window.location.hash) {
+        window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+      }
+      window.scrollTo(0, 0);
+    };
+
+    resetToTop();
+    const firstFrame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(resetToTop);
+    });
+    window.addEventListener("load", resetToTop, { once: true });
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.removeEventListener("load", resetToTop);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
   useEffect(() => {
     const track = testimonialTrackRef.current;
     if (!track) return;
@@ -642,13 +666,13 @@ export default function Home() {
       <section id="about" className="section-pad bg-[#FFF9F5]">
         <div className="mx-auto grid max-w-7xl gap-14 px-6 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-10">
           <motion.div {...reveal} className="relative">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2.4rem] bg-[#F6B7C9] shadow-[0_30px_80px_rgba(75,21,48,0.14)]">
+            <div className="relative aspect-[2/3] overflow-hidden rounded-[2.4rem] bg-[#F6B7C9] shadow-[0_30px_80px_rgba(75,21,48,0.14)]">
               <Image
                 src="/images/jessica-about-professional.jpg"
                 alt="Jessica Sampson, founder of The Intimacy Masters"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
-                className="object-cover object-[50%_42%]"
+                className="object-cover object-center"
               />
             </div>
             <div className="absolute -bottom-6 -right-2 max-w-[235px] rounded-[1.6rem] border border-white bg-white/88 p-5 shadow-xl backdrop-blur-xl sm:-right-6">
