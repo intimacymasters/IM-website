@@ -72,8 +72,10 @@ This is what shows the panel on the right of Google with photo, reviews and a ca
 Sex and marriage advice is a sensitive topic. Google ranks it by how clearly the expert can be verified. The About page states Jessica's credentials. These details would make them checkable:
 
 - [ ] The exact name of each licence or certification, who issued it, and the year.
-- [ ] The name and year of each award.
-- [ ] Press features, podcast interviews and TV or radio appearances, with links.
+- [x] ELOY Awards 2022, "Best on Couple's Relationship and Intimacy": on the site.
+- [ ] The name and year of any other award.
+- [x] Press features: Vanguard Allure cover story, Vanguard and The Nation are on the About page.
+- [ ] More press, podcast interviews and TV or radio appearances, with links.
 - [ ] Permission to show first name and city on a few reviews. Named reviews are trusted more than anonymous ones.
 - [ ] A review of the privacy policy by Jessica or her adviser.
 
