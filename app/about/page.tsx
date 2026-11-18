@@ -3,6 +3,7 @@ import { BookingButton } from "../components/booking";
 import { CountUp } from "../components/count-up";
 import { TrustedBy } from "../components/logo-marquee";
 import { PageShell } from "../components/page-shell";
+import { Press } from "../components/press";
 import { Reveal } from "../components/reveal";
 import { Accent, FinalCta, HeroNote, PageHero, SectionIntro, TextLink } from "../components/sections";
 import { Testimonials } from "../components/testimonials";
@@ -25,7 +26,7 @@ const credentials = [
   { title: "Family life coach", text: "Coaching for individuals, couples and families." },
   { title: "Child and teen sexuality educator", text: "Body safety, consent, puberty and values, in schools and at home." },
   { title: "Author of five books", text: "Including Outercourse and Woman, Sex Was Made for You Too." },
-  { title: "Award-winning", text: "Recognised at the ELOY Awards in 2022." },
+  { title: "Award-winning", text: "Best on Couple's Relationship and Intimacy, ELOY Awards 2022." },
 ];
 
 const numbers = [
@@ -103,6 +104,8 @@ export default function AboutPage() {
           </dl>
         </div>
       </section>
+
+      <Press />
 
       <section className="section-pad bg-[#FFF9F5]">
         <div className="mx-auto grid max-w-7xl gap-14 px-6 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20 lg:px-10">

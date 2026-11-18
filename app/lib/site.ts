@@ -264,6 +264,34 @@ export const freeGuide = {
   cover: "/guides/20-ways-cover.jpg",
 };
 
+// Press coverage, newest first. `date` is the day the piece was published.
+export type PressItem = { outlet: string; title: string; date?: string; href: string };
+
+export const press: PressItem[] = [
+  {
+    outlet: "Vanguard Allure",
+    title: "Cover story: Jessica Sampson, The Intimacy Master",
+    date: "2024-07-21",
+    href: "https://allure.vanguardngr.com/2024/07/jessica-sampson-the-intimacy-master/",
+  },
+  {
+    outlet: "Vanguard",
+    title: "Jessica Sampson convenes first-ever sex conference",
+    date: "2024-07-01",
+    href: "https://www.vanguardngr.com/2024/07/jessica-sampson-convenes-first-ever-sex-conference-july-20/",
+  },
+  {
+    outlet: "The Nation",
+    title: "Jessica Sampson to convene first sex health conference in Lagos",
+    href: "https://thenationonlineng.net/jessica-sampson-to-convene-first-ever-s3x-health-conference-in-lagos/",
+  },
+];
+
+export const pressCover = {
+  src: "/images/press/allure-cover-2024.jpg",
+  alt: "Jessica Sampson on the cover of Vanguard Allure magazine, 21 July 2024, under the headline The Intimacy Master",
+};
+
 export const amazonLinks = {
   outercourseForHer: "https://a.co/d/2TiXvAu",
   outercourseForHim: "https://amazon.co.uk/dp/B0BK2L1YFB",

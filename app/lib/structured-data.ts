@@ -2,7 +2,7 @@
 // Everything here restates facts already shown on the site.
 
 import { absoluteUrl, siteName, siteUrl } from "./seo";
-import { contact, type Product } from "./site";
+import { contact, press, type Product } from "./site";
 
 const ORG_ID = `${siteUrl}/#organization`;
 const PERSON_ID = `${siteUrl}/#jessica-sampson`;
@@ -44,6 +44,14 @@ export function siteGraph(): Node[] {
       url: absoluteUrl("/about"),
       worksFor: { "@id": ORG_ID },
       sameAs: [contact.instagram, contact.tiktok, contact.newsletter],
+      award: "Best on Couple's Relationship and Intimacy, ELOY Awards 2022",
+      subjectOf: press.map((item) => ({
+        "@type": "NewsArticle",
+        headline: item.title,
+        url: item.href,
+        ...(item.date ? { datePublished: item.date } : {}),
+        publisher: { "@type": "Organization", name: item.outlet },
+      })),
       knowsAbout: ["Marriage coaching", "Sexual wellbeing in marriage", "Clinical sexology", "Sexuality education for children and teenagers", "Family life coaching"],
     },
     {
